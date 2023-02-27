@@ -1,0 +1,209 @@
+        
+/*======================================================================================================================*/
+/*                                  <~~~~~~~~| Problemas y Dudas TXT |~~~~~~~~>                                         */
+/*======================================================================================================================*/
+
+
+-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+		    |>|==============| Desafio clase 36: Tercer Entrega Proyecto |================|<|  
+
+========| En Carritos (Controlador):
+
+problemas con los controladores de productos y carritos (en prod: actualizar, eliminar y eliminar todos, en carrito crear y ver si me andan las otras)
+
+falta terminar funcionalidad procesar compra, 
+
+Tambien las demas mensajerias (cuando hice la prueba de envio de SMS, whatsapp y email no pude) :(
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+========| En Vistas:
+
+Me queda por hacer que funque lo de los productos de carrito, en vistas cart (falta terminar y que funcione bien la funcionalidad contenedor)
+
+
+#########################################################################################################################
+
+
+-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+                |>|==============| Desafio clase 40: Mejorar la arquitectura API |================|<|  
+
+
+=========| En Factory - Singleton:
+
+Marcos como podria implementar singleton, crei que lo habia implementado bien pero no, :(
+
+case ‘Mongo’:
+        if (!Dao) {
+        Dao = ContenedorMongoBD(urlConexionBD)
+        await Dao.iniciar();
+        break
+} else {
+        return Dao
+}
+
+pero no me funca, igual que este cambio que hice pero sigue sin andarme
+
+case ‘Mongo’:
+        if (Dao) return Dao
+        Dao = new ContenedorMongoBD(urlConexionBD)
+        await Dao.iniciar();
+        break
+
+
+Me muestar este Error:
+
+if (Dao) return Dao
+^^^^^^
+SyntaxError: Illegal return statement
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+========| Mongoose esquemas Factory:
+
+haciendo algo similar a lo que veniamos haciendo con el dao index.js 
+
+( tengo esa duda x que para utilizarlo tengo que utilizar el Repositorio no? ¿osea el esquema mongoose seria complementario al Dto con los modelosDto? )
+
+algo asi lo puedo hacer?  
+
+class DaoFactory {
+    static obtener(tipoBaseDatos) {
+
+        switch (tipoBaseDatos) {
+            case 'Mem': return new ContenedorMemoria()
+            case 'File': return new ContenedorFileSystem(process.cwd() + almacenamientoEnArchivo)
+                await Dao.iniciar();
+            case 'Mongo': { 
+                Dao = new ContenedorMongoBD(urlConexionBD, 'elementos'),
+                Dao = new ContenedorMongodbMensaje(urlConexionBD, 'mensajes'),
+                Dao = new ContenedorMongodbCarrito(urlConexionBD, 'carritos'),
+                Dao = new ContenedorMongodbUsuario(urlConexionBD, 'usuarios'),
+                Dao = new ContenedorMongodbProducto(urlConexionBD, 'productos')
+                return Dao;
+                await Dao.iniciar();
+                break
+            }
+            default: return new ContenedorMemoria()
+        }
+    }
+}
+la duda seria si esta encaminado el intento de implementacion de la seleccion de Daos en factory (MongoBD), mas que nada porque no se como se lo podria confuigurar correctamente (sintaxis) o mediante que forma ( dao/DaoElemento/otro, ej: DaoMensajes )
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+=========| Duda de implementacion de carpetas - Esquemas Mongoose/Dtos (Modelos):
+
+la duda seria si estan bien las carpetas (Daos), y si estaria bueno que ponga los esquemas del Dto (Modelos) en una carpeta como los de mongoose
+
+actualizacion:  en Modelos - modelosMongoose y validacionesJoi - en este punto tengo la duda que si no estaria mejor poner las validaciones joi en utilidades
+
+-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+
+========| En Controladores - index.js (Mensajes):
+
+Este Problema lo tengo en los 2 no me encuentra/no me lo toma el archivo controladorMensajes.js en el index.js de controladores creo que esta re bugueado, en los demas me andan perfecto, y no hay ningun error (o no lo estoy viendo x ningun lado), cerre y volvi a abrir visual, reinicie la compu, pero el bug persiste
+
+Resalto que esta re buguado, ni idea que onda
+
+
+-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+		|>|==============| Desafio clase 42: Testeamos nuestra API REST |================|<|  
+
+
+=========| Duda Implementacion Errores Tests
+
+Me refiero a hacer test similares a estos: “deberia dar error cuando la tarea a completar no existe”, “deberia dar error cuando no hay tareas cargadas” 
+
+Yo trate de hacer unas como estas no se si estaria bien (la idea de prueba) “Deberia dar error cuando falta descripcion al crear un nuevo producto”, Deberia dar error cuando falta el id para eliminar un producto 
+
+Ejemplo => expect(respuesta.statusCode).toBe(400)
+
+
+me refiero a esto:
+
+const errorEsperado = new Error(400)
+
+assert.throws(() => {
+
+this.ApiProds.eliminarProdXid(a)
+
+}, errorEsperado)
+
+
+------------------------------------------------------
+
+
+ejemplo de lo que entendi:
+
+        (mocha child):
+
+    test('Deberia dar error cuando falta/no existe el id para eliminar un producto', async () => {
+        const respuesta = await request(app).delete('/7')
+        expect(respuesta.statusCode).to.deep(400)
+    })
+
+        (mocha assert)
+
+    it('Deberia dar error cuando falta/no existe el id para eliminar un producto', async () => {
+        // const respuesta = assert.strictEqual(this.ApiProds.eliminarProdXid(a).length, 1)
+        // assert.deepStrictEqual(respuesta.status, 400)
+        const errorEsperado = new Error(400)
+        assert.throws(() => {
+            this.ApiProds.eliminarProdXid(7)
+        }, errorEsperado)
+    })
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+============| Singleton desafio 42:
+
+creeria que si, el como no se
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+===========| Duda en Apis:
+
+¿Tengo que implementar la funcionalidad de obtener(todos), obtener(id), actualizar, eliminar(id) y eliminar(todos) 
+en todos las APIS (mensajes, productos, usuarios, carritos) ?
+
+Pregunto x que quizas es obvio que deberia tenerlo y me cuelgo
+
+Creeria que actualizar en mensajes y usuario no necesitaria no?
+
+y en controladores tambien necesitaria implementarlo o no haria falta/o no por el momento?
+
+Como por ejemplo en el controlador carritos obtener(id), actualizar, eliminar(id) y eliminar(todos) que antes lo teniamos utilizando postman
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+===========| Problema para correr los Tests: (con mocha y jest)
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+===========| Tengo algunas mas de Test, pero despues te las comento, veo si lo puedo resolver
+
+
+#########################################################################################################################
+
+-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+                                                ACLARACION:   
+                            POR AHI ME ESTOY OLVIDANDO DE UNA, PERO MAÑANA ME FIJO BIEN 
+                            Y TE LO DIGO, ADEMAS DE LO "Tengo algunas mas de Test".
+
+-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
