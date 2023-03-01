@@ -1,7 +1,7 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| DAO - Factory |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-import { config } from '../../Configuracion/config.js';
+import { config } from '../Configuracion/config.js';
 import { ContenedorFileSystem } from '../Contenedores/contenedorFileSystem.js';
 // import { ContenedorMongoBD } from '../Contenedores/contenedorMongoBD.js';
 import { ContenedorMemoria } from '../Contenedores/contenedorMemoria.js';
@@ -18,7 +18,7 @@ const urlConexionBD = (config.DATABASES.mongo.url, {
 
 
 class DaoFactory {
-    static obtener(tipoBaseDatos) {
+    static obtenerDao(tipoBaseDatos) {
 
         switch (tipoBaseDatos) {
             case 'Mem': return new ContenedorMemoria()
@@ -38,12 +38,6 @@ class DaoFactory {
         }
     }
 }
-
-// class DaoFactory {
-//     static obtenerDAO() {
-//         return { Dao, DaoProdMongo, DaoCartMongo, DaoMsjMongo, DaoUserMongo }
-//     }
-// }
 
 export default DaoFactory;
 
@@ -104,3 +98,29 @@ export default DaoFactory;
 
 
 // export default { DaoFactory };
+
+
+
+
+// let instacia = null
+// export class PrimeraConexion {
+//     static instancia
+//     hora = 0
+//     constructor() {
+//         this.hora = new Date().toLocaleString()
+//     }
+//     obtenerHora() {
+//         return this.hora
+//     }
+//     static getInstancia = () => {
+//         if (!instacia)
+//             instacia = new PrimeraConexion()
+//         return instacia
+//     }
+// }
+
+// class DaoFactory {
+//     static obtenerDAO() {
+//         return { Dao, DaoProdMongo, DaoCartMongo, DaoMsjMongo, DaoUserMongo }
+//     }
+// }

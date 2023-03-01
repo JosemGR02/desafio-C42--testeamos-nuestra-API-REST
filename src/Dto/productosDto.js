@@ -1,8 +1,7 @@
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| DTO - Productos |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-
-class ProdutosDTO {
+class ProductosDTO {
     constructor({ titulo, descripcion, codigo, imagen, precio, stock, timestamp }) {
         this.titulo = titulo
         this.descripcion = descripcion
@@ -21,5 +20,4 @@ export function usandoDTO(elemento) {
         return new ProdutosDTO(elemento)
 }
 
-
-export default { ProdutosDTO };
+export { ProductosDTO };

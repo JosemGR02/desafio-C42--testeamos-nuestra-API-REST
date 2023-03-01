@@ -11,8 +11,6 @@ import { app } from './app.js';
 //? toEqual == to.equal == strictEqual
 //? toBe == to.deep == deepStrictEqual 
 
-//*     expect(response.body.numeros).to.deep.equal([2])
-
 describe('Prueba funcionalidad API REST Productos', () => {
 
     //* ( get x id: /:id || todos: / )

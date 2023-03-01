@@ -21,4 +21,4 @@ class ContenedorMongodbCarrito extends ContenedorMongoBD {
     }
 }
 
-export default ContenedorMongodbCarrito;
+export { ContenedorMongodbCarrito };

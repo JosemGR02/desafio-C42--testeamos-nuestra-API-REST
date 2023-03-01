@@ -15,4 +15,4 @@ class ContenedorMongodbUsuario extends ContenedorMongoBD {
     }
 }
 
-export default ContenedorMongodbUsuario; 
+export { ContenedorMongodbUsuario }; 

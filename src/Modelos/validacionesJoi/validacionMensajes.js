@@ -42,10 +42,10 @@ class ValidacionJoiMensaje {
     static validar(mensaje, requerido) {
         const MensajeSchema = Joi.object({
             id: requerido ? Joi.string().required() : Joi.string(),
-            nombre: requerido ? Joi.string().required() : Joi.string(),
-            apellido: requerido ? Joi.string().required() : Joi.string(),
-            edad: requerido ? Joi.string().required() : Joi.string(),
-            alias: requerido ? Joi.string().required() : Joi.string(),
+            nombre: requerido ? Joi.string().required().length(15) : Joi.string(),
+            apellido: requerido ? Joi.string().required().length(15) : Joi.string(),
+            edad: requerido ? Joi.string().required().max(3) : Joi.string(),
+            alias: requerido ? Joi.string().required().length(15) : Joi.string(),
             avatar: requerido ? Joi.string().required() : Joi.string()
         })
 
@@ -56,4 +56,4 @@ class ValidacionJoiMensaje {
     }
 }
 
-export default ValidacionJoiMensaje;
+export { ValidacionJoiMensaje };

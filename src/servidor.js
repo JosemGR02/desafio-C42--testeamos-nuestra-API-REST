@@ -6,7 +6,6 @@ import __dirname from "./dirname.js";
 import passport from "passport";
 import cluster from 'cluster';
 import _yargs from 'yargs';
-import cors from 'cors';
 import { app } from './servidor.js';
 import { hideBin } from 'yargs/helpers';
 const yargs = _yargs(hideBin(process.argv));
@@ -17,7 +16,6 @@ import { logger } from './Configuracion/logger.js';
 
 
 
-if (config.NODE_ENV == 'development') app.use(cors());
 
 const mongOptiones = { useNewUrlParser: true, useUnifiedTopology: true }
 

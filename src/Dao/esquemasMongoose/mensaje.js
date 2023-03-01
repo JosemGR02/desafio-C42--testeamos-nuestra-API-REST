@@ -15,4 +15,4 @@ class ContenedorMongodbMensaje extends ContenedorMongoBD {
     }
 }
 
-export default ContenedorMongodbMensaje;
+export { ContenedorMongodbMensaje };

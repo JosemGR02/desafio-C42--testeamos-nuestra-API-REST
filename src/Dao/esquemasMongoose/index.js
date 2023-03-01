@@ -1,9 +1,9 @@
 
-export { CarritosMongoBD } from './carrito.js';
+export { ContenedorMongodbCarrito } from './carrito.js';
 
-export { MensajesMongoBD } from './mensaje.js';
+export { ContenedorMongodbMensaje } from './mensaje.js';
 
-export { ProductosMongoBD } from './producto.js';
+export { ContenedorMongodbProducto } from './producto.js';
 
-export { UsuariosMongoBD } from './usuario.js';
+export { ContenedorMongodbUsuario } from './usuario.js';
 

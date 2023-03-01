@@ -2,10 +2,8 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~| Testeo con Jest |~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 import request from 'supertest';
-import { RutaProducto } from '../Rutas/index.js';
-import { app } from '../servidor.js';
+import { app } from '../app.js';
 import { logger } from '../Configuracion/logger.js';
-// import { app } from './app.js';
 
 
 //* SOLO TESTEO API PRODUCTOS

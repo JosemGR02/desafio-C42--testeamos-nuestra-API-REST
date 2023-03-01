@@ -15,5 +15,5 @@ class ContenedorMongodbProducto extends ContenedorMongoBD {
     }
 }
 
-export default ContenedorMongodbProducto;
+export { ContenedorMongodbProducto };
 

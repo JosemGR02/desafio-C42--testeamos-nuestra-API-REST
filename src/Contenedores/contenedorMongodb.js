@@ -1,7 +1,6 @@
 
 // import mongoose from 'mongoose';
-import { usandoDTO } from '../dtos/PersonaDTO.js';
-import { logger } from '../../Configuracion/logger.js';
+import { logger } from '../Configuracion/logger.js';
 import mongodb from 'mongodb';
 const { MongoClient } = mongodb;
 
@@ -24,18 +23,16 @@ class ContenedorMongoBD extends contenedorBase { //getNext_Id
             })()
     }
 
-    obtenerElementos = async _id => {
+    obtener = async id => {
         try {
-            if (_id) {
-                console.log(_id)
-                const respuesta = await this._collection.findOne({ _id: ObjectId(_id) })
-                // return [noticia]
-                return usandoDTO([respuesta])
+            if (id) {
+                console.log(id)
+                const respuesta = await this._collection.findOne({ id: ObjectId(id) })
+                return [respuesta]
             }
             else {
-                const respuestas = await this._collection.find({}).toArray()
-                // return noticias;
-                return usandoDTO(respuestas)
+                const respuesta = await this._collection.find({}).toArray()
+                return respuesta
             }
         }
         catch (error) {
@@ -46,18 +43,17 @@ class ContenedorMongoBD extends contenedorBase { //getNext_Id
     obtenerUno = async opciones => {
         try {
             const respuesta = await this._coleccion.findOne(opciones).lean().exec();
-            return usandoDTO(respuesta)
+            return respuesta
         }
         catch (error) {
-            logger.error(`${error}, Error al obtener le elemento seleccionado`);
+            logger.error(`${error}, Error al obtener un elemento seleccionado`);
         }
     }
 
     guardar = async elemento => {
         try {
             await this._collection.insertOne(elemento);
-            // return noticia
-            return usandoDTO(elemento)
+            return elemento
         }
         catch (error) {
             logger.error(`${error}, Error al guardar un elemento`);
@@ -65,11 +61,10 @@ class ContenedorMongoBD extends contenedorBase { //getNext_Id
         }
     }
 
-    actualizar = async (_id, elemento) => {
+    actualizar = async (id, elemento) => {
         try {
-            await this._collection.updateOne({ _id: ObjectId(_id) }, { $set: elemento });
-            // return elemento
-            return usandoDTO(elemento)
+            await this._collection.updateOne({ id: ObjectId(id) }, { $set: elemento });
+            return elemento
         }
         catch (error) {
             logger.error(`${error}, Error al actualizar un elemento`);
@@ -77,130 +72,21 @@ class ContenedorMongoBD extends contenedorBase { //getNext_Id
         }
     }
 
-    eliminarXid = async _id => {
-        let noticiaBorrada = usandoDTO({}, _id, null)
+    eliminar = async id => {
         try {
-            await this._collection.deleteOne({ _id: ObjectId(_id) })
-            return noticiaBorrada
+            if (id) {
+                await this._collection.deleteOne({ id: ObjectId(id) })
+                return elementoEliminado
+            } else {
+                await this._coleccion.deleteMany({})
+            }
         }
         catch (error) {
-            logger.error(`${error}, Error al eliminar un elemento`);
-            return noticiaBorrada
-        }
-    }
-
-    async eliminarTodos() {
-        try {
-            await this._coleccion.deleteMany({})
-        }
-        catch (error) {
-            logger.error(`${error}, Error al eliminar todos los elementos`);
+            logger.error(`${error}, Error al eliminar un/os elemento/s`);
+            return elementoEliminado
         }
     }
 }
 
-export default { ContenedorMongoBD };
+export { ContenedorMongoBD };
 
-
-
-
-// obtenerNoticias = async _id => {
-//     try {
-//         // MONGO
-//         // FINDONE => {}
-//         // FIND => [{},{},...,{}]
-//         if (_id) {
-//             console.log(_id)
-//             const noticia = await this._collection.findOne({ _id: ObjectId(_id) })
-//             console.log(noticia)
-//             return [noticia]
-//         }
-//         else {
-//             const noticias = await this._collection.find({}).toArray()
-//             return noticias;
-//         }
-//     }
-//     catch (error) {
-//         console.log('obtenerNoticias error', error)
-//     }
-// }
-
-// guardarNoticia = async noticia => {
-//     try {
-//         await this._collection.insertOne(noticia);
-//         return noticia
-//     }
-//     catch (error) {
-//         console.log('guardarNoticia error', error)
-//         return noticia
-//     }
-
-// }
-
-// actualizarNoticia = async (_id, noticia) => {
-//     try {
-//         await this._collection.updateOne({ _id: ObjectId(_id) }, { $set: noticia });
-//         return noticia
-//     }
-//     catch (error) {
-//         console.log('actualizarNoticia error', error)
-//         return noticia
-//     }
-// }
-
-// borrarNoticia = async _id => {
-//     let noticiaBorrada = noticiaDTO({}, _id, null)
-//     try {
-//         await this._collection.deleteOne({ _id: ObjectId(_id) })
-//         return noticiaBorrada
-//     }
-//     catch (error) {
-//         console.log('borrarNoticia error', error)
-//         return noticiaBorrada
-//     }
-// }
-
-
-// dudas !!
-
-// async desconectar() {
-//     await mongoose.disconnect()
-//     logger.info('La conexion con MongoBD, ha sido desconectada correctamente')
-// }
-
-// async obtenerTodos() {
-//     const respuesta = await this._coleccion.find({})            // this.model
-//     return usandoDTO(respuesta)
-// }
-
-// async obtenerXid(id) {
-//     const respuesta = await this._coleccion.findById(id);
-//     return usandoDTO(respuesta)
-// }
-
-// async guardar(elemento) {
-//     await this._coleccion.create(elemento)
-//     return usandoDTO(elemento)
-// }
-
-// async actualizar(id, nuevosDatos) {
-//     const respuesta = await this._coleccion.findOneAndUpdate({ id: id }, { $set: nuevosDatos })
-//     return usandoDTO(respuesta)
-// }
-
-// async obtenerTelefono(numero) {
-//     // const respuesta = await this._coleccion.findOne(numero).lean().exec();
-//     const respuesta = await this._coleccion.find(usuario => usuario.telefono == numero);
-//     // const respuesta = await this._coleccion.find(telefono => usuario.telefono == numero);
-//     return respuesta;
-// }
-
-// async eliminarXid(id) {
-//     const respuesta = await this._coleccion.findOneAndDelete({ id: id })
-//     // const respuesta = await this.collection.findByIdAndDelete(id);
-//     return usandoDTO(respuesta)
-// }
-
-// async eliminarTodos() {
-//     await this._coleccion.deleteMany({})
-// }

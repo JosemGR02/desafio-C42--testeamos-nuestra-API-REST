@@ -42,4 +42,4 @@ class ValidacionJoiCarrito {
     }
 }
 
-export default ValidacionJoiCarrito;
+export { ValidacionJoiCarrito };

@@ -3,47 +3,54 @@
 
 import { config } from '../Configuracion/config.js';
 import { DaoFactory } from '../Dao/daoFactory.js';
-import { usandoDTO } from '../Dto/usuariosDto.js';
-import { ModeloDtoUsers } from '../Modelos/validacionesJoi/index.js';
+import { UsuariosDTO } from '../Dto/usuariosDto.js';
+import { ValidacionJoiUsuario } from '../Modelos/validacionesJoi/index.js';
 
 
 class ApiUsuarios {
 
     constructor() {
-        this.DaoUsuarios = DaoFactory.obtener(config.SERVER.SELECCION_BASEdDATOS);
+        this.DaoUsuarios = DaoFactory.obtenerDao(config.SERVER.SELECCION_BASEdDATOS);
     }
 
     async obtenerTodosUsuarios() {
-        const elementos = await this.DaoUsuarios.obtenerTodos()
-        return elementos.map(item => new ModeloDtoUsers(item))
-    }
-    async obtenerUnUsuario(elemento) {
-        const Dto = await this.DaoUsuarios.obtenerUno(elemento)
-        return new ModeloDtoUsers(Dto)
+        const elementos = await this.DaoUsuarios.obtener()
+        return elementos.map(elemento => new ValidacionJoiUsuario(UsuariosDTO(elemento)))
     }
 
     async obtenerUsuariosXid(idBuscado) {
-        const Dto = await this.DaoUsuarios.obtenerXid(idBuscado)
-        return new ModeloDtoUsers(Dto)
+        const elemento = await this.DaoUsuarios.obtener(idBuscado)
+        return new ValidacionJoiUsuario(UsuariosDTO(elemento))
+    }
+
+    async obtenerUsuarioUno(elemento) {
+        const respuesta = await this.DaoUsuarios.obtenerUno(elemento)
+        return new ValidacionJoiUsuario(UsuariosDTO(respuesta))
     }
 
     async guardarUsuariosBD(nuevoElemento) {
-        //ApiCarritos.ValidarDatosCarritos(nuevoElemento, true)
-        await this.DaoUsuarios.guardar(usandoDTO(nuevoElemento))
+        ApiUsuarios.ValidarDatosUsuarios(nuevoElemento, true)
+        await this.DaoUsuarios.guardar(UsuariosDTO(nuevoElemento))
+    }
+
+    async actualizarUsuariosBD(idBuscado, datos) {
+        ApiUsuarios.ValidarDatosUsuarios(datos, true)
+        const actualizado = await this.DaoUsuarios.actualizar((idBuscado, datos))
+        return new ValidacionJoiUsuario(UsuariosDTO(actualizado))
     }
 
     async eliminarUsuariosXid(idBuscado) {
-        const eliminado = await this.DaoUsuarios.eliminarXid(idBuscado)
-        return new ModeloDtoUsers(eliminado)
+        const eliminado = await this.DaoUsuarios.eliminar(idBuscado)
+        return new ValidacionJoiUsuario(UsuariosDTO(eliminado))
     }
 
     async eliminarTodosUsuarios() {
-        await this.DaoUsuarios.eliminarTodos()
+        await this.DaoUsuarios.eliminar()
     }
 
     static ValidarDatosUsuarios(usuario, requerido) {
         try {
-            ValidacionJoiUsuario.userValidar(usuario, requerido)
+            ValidacionJoiUsuario.validar(usuario, requerido)
         } catch (error) {
             throw new Error('El usuario posee un formato json invalido o faltan datos: ' + error.details[0].message)
         }

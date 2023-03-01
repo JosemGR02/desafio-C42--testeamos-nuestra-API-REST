@@ -45,13 +45,13 @@ class ValidacionJoiUsuario {
 
     static validar(producto, requerido) {
         const MensajeSchema = Joi.object({
-            nombre: requerido ? Joi.string().required() : Joi.string(),
-            edad: requerido ? Joi.number().required() : Joi.number(),
-            usuario: requerido ? Joi.string().required() : Joi.string(),
+            nombre: requerido ? Joi.string().required().length(20) : Joi.string(),
+            edad: requerido ? Joi.number().required().max(3) : Joi.number(),
+            usuario: requerido ? Joi.string().required().email() : Joi.string(),
             avatar: requerido ? Joi.string().required() : Joi.string(),
-            contrasena: requerido ? Joi.number().required() : Joi.number(),
-            telefono: requerido ? Joi.number().required() : Joi.number(),
-            direccion: requerido ? Joi.string().required() : Joi.string()
+            contrasena: requerido ? Joi.number().required().max(20) : Joi.number(),
+            telefono: requerido ? Joi.number().required().max(20) : Joi.number(),
+            direccion: requerido ? Joi.string().required().length(50) : Joi.string()
         })
 
         const { error } = MensajeSchema.validate(producto)
@@ -61,4 +61,4 @@ class ValidacionJoiUsuario {
     }
 }
 
-export default ValidacionJoiUsuario;
+export { ValidacionJoiUsuario };

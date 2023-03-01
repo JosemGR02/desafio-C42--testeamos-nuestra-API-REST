@@ -8,6 +8,10 @@
 
 		    |>|==============| Desafio clase 36: Tercer Entrega Proyecto |================|<|  
 
+
+REPO:   [ https://github.com/JosemGR02/desafio-C36--Tercera-Entrega-Proyecto-Final.git ]
+
+
 ========| En Carritos (Controlador):
 
 problemas con los controladores de productos y carritos (en prod: actualizar, eliminar y eliminar todos, en carrito crear y ver si me andan las otras)
@@ -25,12 +29,18 @@ Tambien las demas mensajerias (cuando hice la prueba de envio de SMS, whatsapp y
 Me queda por hacer que funque lo de los productos de carrito, en vistas cart (falta terminar y que funcione bien la funcionalidad contenedor)
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 #########################################################################################################################
 
 
 -~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
 
                 |>|==============| Desafio clase 40: Mejorar la arquitectura API |================|<|  
+
+
+REPO:   [ https://github.com/JosemGR02/desafio-C40--Mejorar-la-arquitectura-de-nuestra-API.git ]
 
 
 =========| En Factory - Singleton:
@@ -94,6 +104,7 @@ class DaoFactory {
         }
     }
 }
+
 la duda seria si esta encaminado el intento de implementacion de la seleccion de Daos en factory (MongoBD), mas que nada porque no se como se lo podria confuigurar correctamente (sintaxis) o mediante que forma ( dao/DaoElemento/otro, ej: DaoMensajes )
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,14 +116,11 @@ la duda seria si estan bien las carpetas (Daos), y si estaria bueno que ponga lo
 
 actualizacion:  en Modelos - modelosMongoose y validacionesJoi - en este punto tengo la duda que si no estaria mejor poner las validaciones joi en utilidades
 
--~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-========| En Controladores - index.js (Mensajes):
-
-Este Problema lo tengo en los 2 no me encuentra/no me lo toma el archivo controladorMensajes.js en el index.js de controladores creo que esta re bugueado, en los demas me andan perfecto, y no hay ningun error (o no lo estoy viendo x ningun lado), cerre y volvi a abrir visual, reinicie la compu, pero el bug persiste
-
-Resalto que esta re buguado, ni idea que onda
+########################################################################################################################
 
 
 -~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
@@ -120,7 +128,9 @@ Resalto que esta re buguado, ni idea que onda
 		|>|==============| Desafio clase 42: Testeamos nuestra API REST |================|<|  
 
 
-=========| Duda Implementacion Errores Tests
+REPO:   [ https://github.com/JosemGR02/desafio-C42--testeamos-nuestra-API-REST.git ]
+
+=========| Duda Implementacion Errores en Tests ademas de (get, post, put, delete)
 
 Me refiero a hacer test similares a estos: “deberia dar error cuando la tarea a completar no existe”, “deberia dar error cuando no hay tareas cargadas” 
 
@@ -164,13 +174,13 @@ ejemplo de lo que entendi:
     })
 
 
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        ===========| Problema para correr los Tests: (con mocha y jest)
 
-============| Singleton desafio 42:
 
-creeria que si, el como no se
-
+x los problemas que no me reconoce loas clase sno puedo llegar a correr los tests
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -187,18 +197,38 @@ y en controladores tambien necesitaria implementarlo o no haria falta/o no por e
 
 Como por ejemplo en el controlador carritos obtener(id), actualizar, eliminar(id) y eliminar(todos) que antes lo teniamos utilizando postman
 
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-===========| Problema para correr los Tests: (con mocha y jest)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+########################################################################################################################
+
+
+-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+		|>|==============| Desafio clase 44: Reformar para usar GraphQL |================|<|  
+
+
+REPO:   [ https://github.com/JosemGR02/desafio-C44--Reformar-para-usar-Graphql.git ]
+
+        
+===========| Duda en la implementacion de Queries:
+
+al implementar usuarios (queries) como no tengo /gets, tengo que implementarlo en ruta autenticacion (getXid getAll) como en productos?
+ya que igualmente utilizaria: obtenerUsuariosXid, guardarUsuarioBD en passport, cosa que podria hacer el get (obtenerUsuariosXid) en GraphQL 
+
+
+ y en Mensajes necesitaria hacer un getxid ? (ya que anteriormente usamos el obtenerTodos y guardar)
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ===========| Tengo algunas mas de Test, pero despues te las comento, veo si lo puedo resolver
 
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 #########################################################################################################################
+
 
 -~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
 
@@ -207,3 +237,6 @@ Como por ejemplo en el controlador carritos obtener(id), actualizar, eliminar(id
                             Y TE LO DIGO, ADEMAS DE LO "Tengo algunas mas de Test".
 
 -~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-~o~-
+
+
+

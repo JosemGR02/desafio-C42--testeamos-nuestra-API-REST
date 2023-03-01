@@ -1,139 +1,90 @@
 
-import { usandoDTO } from '../dtos/PersonaDTO.js';
-import { logger } from '../../Configuracion/logger.js';
-
 class ContenedorMemoria extends contenedorBase {
 
-    constructor() {
-        this.elementos = [];
+    constructor(array = []) {
+        super()
+        this.elementos = array
     }
 
-    iniciar() {
-        logger.info('Iniciando con el contenedor en Memoria')
+    obtener = async id => {
+        try {
+            if (id) {
+                let indice = this.elementos.obtenerIndice(elemento => elemento.id == id)
+                if (indice === -1)
+                    return []
+                return [this.elementos[indice]]
+            }
+            else {
+                return this.elementos
+            }
+        }
+        catch (error) {
+            logger.error(`${error}, Error al obtener un/os elemento/s`);
+
+            return []
+        }
     }
 
-    desconectar() {
-        logger.info('El contenedor en Memoria ha sido desconectado')
+    guardar = async elemento => {
+        try {
+            let elementoGuardado = elemento
+            this.noticias.push(elementoGuardado)
+
+            return elementoGuardado
+        }
+        catch (error) {
+            logger.error(`${error}, Error al guardar un elemento`);
+
+            let elemento = {}
+            return elemento
+        }
     }
 
-    obtenerTodos() {
-        return asDto(this.elementos)
+    actualizar = async (id, elemento) => {
+        try {
+            let nuevoElemento = (elemento, id)
+
+            let indice = this.obtenerIndice(id, this.elementos)
+            let elementoEncontrado = this.noticias[indice] || {}
+
+            let elementoActualizado = { ...elementoEncontrado, ...nuevoElemento }
+
+            indice >= 0 ?
+                this.elementos.splice(indice, 1, elementoActualizado) :
+                this.elementos.push(elementoActualizado)
+
+            return elementoActualizado
+        }
+        catch (error) {
+            logger.error(`${error}, Error al acualizar un elemento`);
+
+            let elemento = {}
+            return elemento
+        }
     }
 
-    obtenerXid(id) {
-        return usandoDTO(this.elementos[this.obtenerIndice(id)])
-    }
+    eliminar = async id => {
+        try {
+            if (id) {
+                let indice = this.obtenerIndice(id, this.elementos)
+                let elementoEliminado = this.elementos.splice(indice, 1)[0]
 
-    guardar(elemento) {
-        this.elementos.push(elemento)
-        return usandoDTO(elemento)
-    }
+                return elementoEliminado
+            } else {
+                this.elementos = []
+            }
+        }
+        catch (error) {
+            logger.error(`${error}, Error al eliminar un/os elemento/s`);
 
-    actualizar(id, nuevosdatos) {
-        const index = this.obtenerIndice(id)
-        const actualizado = { ...this.elementos[index], ...nuevosdatos }
-        this.elementos.splice(index, 1, actualizado)
-        return usandoDTO(actualizado)
-    }
-
-    eliminarXid(id) {
-        const [eliminado] = this.elementos.splice(this.obtenerIndice(id), 1)
-        return usandoDTO(eliminado)
-    }
-
-    eliminarTodos() {
-        this.elementos = []
+            let elemento = {}
+            return elemento
+        }
     }
 }
 
-export default { ContenedorMemoria };
+
+export { ContenedorMemoria };
 
 
 
-
-// import noticiaDTO from '../DTOs/noticias.js'
-// import NoticiasBaseDAO from './noticias.js'
-
-// class NoticiasMemFileDAO extends NoticiasBaseDAO {
-
-//     constructor(array = []) {
-//         super()
-//         this.noticias = array
-//     }
-
-//     obtenerNoticias = async _id => {
-//         try {
-//             if (_id) {
-//                 let index = this.noticias.findIndex(noticia => noticia._id == _id)
-//                 if (index === -1)
-//                     return []
-//                 return [this.noticias[index]]
-//             }
-//             else {
-//                 return this.noticias
-//             }
-//         }
-//         catch (error) {
-//             console.log('error en obtenerNoticias', error)
-//             return []
-//         }
-//     }
-
-//     guardarNoticia = async noticia => {
-//         try {
-//             let _id = this.getNext_Id(this.noticias)
-//             let fyh = new Date().toLocaleString()
-//             let noticiaGuardada = noticiaDTO(noticia, _id, fyh)
-//             this.noticias.push(noticiaGuardada)
-
-//             return noticiaGuardada
-//         }
-//         catch (error) {
-//             console.log('error en guardarNoticia:', error)
-//             let noticia = {}
-
-//             return noticia
-//         }
-//     }
-
-//     actualizarNoticia = async (_id, noticia) => {
-//         try {
-//             let fyh = new Date().toLocaleString()
-//             let noticiaNew = noticiaDTO(noticia, _id, fyh)
-
-//             let indice = this.getIndex(_id, this.noticias)
-//             let noticiaActual = this.noticias[indice] || {}
-
-//             let noticiaActualizada = { ...noticiaActual, ...noticiaNew }
-
-//             indice >= 0 ?
-//                 this.noticias.splice(indice, 1, noticiaActualizada) :
-//                 this.noticias.push(noticiaActualizada)
-
-//             return noticiaActualizada
-//         }
-//         catch (error) {
-//             console.log('error en actualizarNoticia:', error)
-//             let noticia = {}
-
-//             return noticia
-//         }
-//     }
-
-//     borrarNoticia = async _id => {
-//         try {
-//             let indice = this.getIndex(_id, this.noticias)
-//             let noticiaBorrada = this.noticias.splice(indice, 1)[0]
-
-//             return noticiaBorrada
-//         }
-//         catch (error) {
-//             console.log('error en borrarNoticia:', error)
-//             let noticia = {}
-
-//             return noticia
-//         }
-//     }
-// }
-
-// export default NoticiasMemFileDAO

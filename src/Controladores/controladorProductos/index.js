@@ -37,17 +37,18 @@ class ControladorProductos {
         }
     };
 
-    actualizarProdXid = async (solicitud, respuesta) => {
+    actualizarProducto = async (solicitud, respuesta) => {
         try {
             const { id } = solicitud.params;
 
             const { titulo, descripcion, codigo, stock,
                 precio, imagen, timestamp } = solicitud.body;
 
-            const productoActualizado = apiProds.actualizarProductosXid({
-                titulo,
-                descripcion, codigo, stock, precio, imagen, timestamp
-            }, Number(id))
+            const productoValidado = await JOI_VALIDADOR.productoJoi.validateAsync({
+                titulo, descripcion, codigo, imagen, precio, stock, timestamp
+            });
+
+            const productoActualizado = apiProds.actualizarProductosXid({ productoValidado }, id)
 
             respuesta.send(`${productoActualizado}, Producto actualizado con exito`)
         } catch (error) {
